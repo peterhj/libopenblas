@@ -95,6 +95,7 @@ fn main() {
       .env("FC",  &fc)
       .arg("USE_THREAD=1")
       .arg("NO_AFFINITY=1")
+      .arg("NUM_THREADS=48")
       //.arg("SYMBOLPREFIX=openblas_parallel_")
       .status().unwrap();
 
