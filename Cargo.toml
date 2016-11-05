@@ -8,5 +8,8 @@ build = "build.rs"
 name = "openblas"
 path = "src/lib.rs"
 
+[build-dependencies]
+walkdir = "^1"
+
 [dependencies]
 libc = "*"

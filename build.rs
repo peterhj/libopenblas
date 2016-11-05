@@ -1,9 +1,19 @@
+extern crate walkdir;
+
+use walkdir::{WalkDir};
+
 use std::env;
 //use std::fs::{create_dir_all};
 use std::path::{PathBuf};
 use std::process::{Command};
 
 fn main() {
+  println!("cargo:rerun-if-changed=build.rs");
+  for entry in WalkDir::new("OpenBLAS") {
+    let entry = entry.unwrap();
+    println!("cargo:rerun-if-changed={}", entry.path().display());
+  }
+
   let manifest_dir = env::var("CARGO_MANIFEST_DIR").unwrap();
   let out_dir = env::var("OUT_DIR").unwrap();
 
@@ -17,7 +27,8 @@ fn main() {
   let mut openblas_par_lib_dst_path = PathBuf::from(&out_dir);
   openblas_par_lib_dst_path.push("libopenblas_parallel.a");
 
-  if !openblas_lib_dst_path.exists() {
+  //if !openblas_lib_dst_path.exists() {
+  {
     let mut openblas_src_path = PathBuf::from(&manifest_dir);
     openblas_src_path.push("OpenBLAS");
     let mut openblas_build_path = PathBuf::from(&out_dir);
@@ -72,7 +83,8 @@ fn main() {
       .status().unwrap();
   }
 
-  if !openblas_par_lib_dst_path.exists() {
+  //if !openblas_par_lib_dst_path.exists() {
+  {
     let mut openblas_src_path = PathBuf::from(&manifest_dir);
     openblas_src_path.push("OpenBLAS");
     let mut openblas_build_path = PathBuf::from(&out_dir);
@@ -128,6 +140,5 @@ fn main() {
       .status().unwrap();
   }
 
-  //println!("cargo:rustc-link-search=native={}", artifacts_path.to_str().unwrap());
   println!("cargo:rustc-link-search=native={}", out_dir);
 }
