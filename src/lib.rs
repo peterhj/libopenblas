@@ -2,7 +2,7 @@ extern crate libc;
 
 use libc::*;
 
-#[derive(Clone, Copy, Debug)]
+/*#[derive(Clone, Copy, Debug)]
 #[repr(C)]
 pub enum CblasOrder {
   RowMajor  = 101,
@@ -159,4 +159,4 @@ extern "C" {
       c: *mut f32,
       ldc: c_int,
   );
-}
+}*/
