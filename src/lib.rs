@@ -1,8 +1,10 @@
+extern crate cblas_ffi;
 extern crate libc;
 
+use cblas_ffi::*;
 use libc::*;
 
-#[derive(Clone, Copy, Debug)]
+/*#[derive(Clone, Copy, Debug)]
 #[repr(C)]
 pub enum CblasOrder {
   RowMajor  = 101,
@@ -37,7 +39,7 @@ pub enum CblasDiag {
 pub enum CblasSide {
   Left  = 141,
   Right = 142,
-}
+}*/
 
 #[link(name = "openblas_sequential", kind = "static")]
 extern "C" {

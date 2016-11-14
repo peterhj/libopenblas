@@ -20,6 +20,7 @@ fn main() {
   let cc = env::var("CC").unwrap_or(format!("gcc"));
   let cxx = env::var("CXX").unwrap_or(format!("g++"));
   let fc = env::var("FC").unwrap_or(format!("gfortran"));
+  let objcopy = env::var("OBJCOPY_PATH").unwrap_or(format!("objcopy"));
 
   let mut openblas_lib_dst_path = PathBuf::from(&out_dir);
   openblas_lib_dst_path.push("libopenblas_sequential.a");
@@ -69,7 +70,7 @@ fn main() {
       .arg("SYMBOLPREFIX=openblas_sequential_")
       .status().unwrap();
 
-    Command::new("objcopy")
+    Command::new(&objcopy)
       .current_dir(&openblas_build_path)
       .arg("--redefine-syms")
       .arg(&openblas_exports_path.join("objcopy.def"))
@@ -126,7 +127,7 @@ fn main() {
       .arg("SYMBOLPREFIX=openblas_parallel_")
       .status().unwrap();
 
-    Command::new("objcopy")
+    Command::new(&objcopy)
       .current_dir(&openblas_build_path)
       .arg("--redefine-syms")
       .arg(&openblas_exports_path.join("objcopy.def"))
